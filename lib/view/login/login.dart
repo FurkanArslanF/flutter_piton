@@ -13,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 boldText: "Login to your account",
               ),
               context.sized.emptySizedHeightBoxHigh,
-              LoginForm(formKey: formKey),
+              const LoginForm(),
             ],
           ),
         ),

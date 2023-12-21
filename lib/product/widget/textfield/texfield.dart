@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 
 class AppTextFormField extends StatelessWidget {
@@ -13,12 +14,18 @@ class AppTextFormField extends StatelessWidget {
       child: TextFormField(
         obscureText: obscureText,
         controller: controller,
-        keyboardType: obscureText ? TextInputType.text : TextInputType.emailAddress,
+        keyboardType: obscureText ? TextInputType.number : TextInputType.emailAddress,
+        inputFormatters: [
+          obscureText ? LengthLimitingTextInputFormatter(20) : FilteringTextInputFormatter.deny(RegExp(r"\s")),
+        ],
         onEditingComplete: () => FocusScope.of(context).nextFocus(),
         decoration: InputDecoration(
           filled: true,
           isDense: true,
           fillColor: const Color(0xFFF4F4F4),
+          errorStyle: const TextStyle(
+            fontSize: 10,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4),
             borderSide: BorderSide.none,

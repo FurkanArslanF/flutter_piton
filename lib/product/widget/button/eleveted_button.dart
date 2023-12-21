@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_piton/product/cubit/login_cubit.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
 import 'package:kartal/kartal.dart';
 import 'package:sizer/sizer.dart';
 
 class NormalElevetedButton extends StatelessWidget {
-  const NormalElevetedButton(
-      {super.key, required this.buttonText, this.onPressed});
+  const NormalElevetedButton({super.key, required this.buttonText, this.onPressed});
   final String buttonText;
   final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
+    final state = context.read<LoginCubit>().state;
     return SizedBox(
       width: 100.w,
       height: 7.h,
@@ -22,13 +24,17 @@ class NormalElevetedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
           ),
         ),
-        child: Text(
-          buttonText,
-          style: context.general.textTheme.bodyLarge?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: AppConstants.whiteColor,
-          ),
-        ),
+        child: state == "loading"
+            ? CircularProgressIndicator(
+                color: AppConstants.whiteColor,
+              )
+            : Text(
+                buttonText,
+                style: context.general.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppConstants.whiteColor,
+                ),
+              ),
       ),
     );
   }
