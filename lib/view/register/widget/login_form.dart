@@ -6,6 +6,7 @@ import 'package:flutter_piton/product/cubit/register_cubit.dart';
 import 'package:flutter_piton/product/entities/register.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
+import 'package:flutter_piton/product/utility/enum/state_enum.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/toastr/toastr.dart';
 import 'package:flutter_piton/view/register/widget/title_and_textfield.dart';
@@ -81,10 +82,11 @@ class _RegisterFormState extends State<RegisterForm> {
       await context.read<RegisterCubit>().register(registerModel);
       if (context.mounted) {
         final state = context.read<RegisterCubit>().state;
-        if (state == "success") {
+        if (state == StateEnum.success) {
+          ToastrMsg.instance.showToastrMsg(context, "Success");
           context.go(RouterManager.home);
         } else {
-          ToastrMsg.instance.showToastrMsg(context, state);
+          ToastrMsg.instance.showToastrMsg(context, "Error");
         }
       }
     } else {

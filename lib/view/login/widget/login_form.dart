@@ -5,6 +5,7 @@ import 'package:flutter_piton/product/cubit/login_cubit.dart';
 import 'package:flutter_piton/product/entities/login.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
+import 'package:flutter_piton/product/utility/enum/state_enum.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/toastr/toastr.dart';
 import 'package:flutter_piton/view/login/widget/title_and_textfield.dart';
@@ -70,10 +71,12 @@ class _LoginFormState extends State<LoginForm> {
       await context.read<LoginCubit>().login(loginModel);
       if (context.mounted) {
         final state = context.read<LoginCubit>().state;
-        if (state == "success") {
+        debugPrint("state: $state");
+        if (state == StateEnum.success) {
+          ToastrMsg.instance.showToastrMsg(context, "Success");
           context.go(RouterManager.home);
         } else {
-          ToastrMsg.instance.showToastrMsg(context, state);
+          ToastrMsg.instance.showToastrMsg(context, "Error");
         }
       }
     } else {
