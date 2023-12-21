@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/widget/button/text_button.dart';
 import 'package:flutter_piton/product/widget/textfield/texfield.dart';
-import 'package:flutter_piton/view/login/widget/checkbox.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kartal/kartal.dart';
 import 'package:sizer/sizer.dart';

@@ -1,61 +1,34 @@
 import 'dart:convert';
 
+import 'package:flutter_piton/product/entities/action.dart';
+
 TokenModel tokenModelFromJson(String str) => TokenModel.fromJson(json.decode(str));
 
 String tokenModelToJson(TokenModel data) => json.encode(data.toJson());
 
 class TokenModel {
-  final ActionLogin actionLogin;
+  final Action action;
 
   TokenModel({
-    required this.actionLogin,
+    required this.action,
   });
 
   TokenModel copyWith({
-    required ActionLogin actionLogin,
+    required Action action,
   }) {
     return TokenModel(
-      actionLogin: actionLogin,
+      action: action,
     );
   }
 
-  factory TokenModel.fromJson(Map<String, dynamic> json) {
+  factory TokenModel.fromJson(Map<String, dynamic> json, {String? action}) {
     return TokenModel(
-      actionLogin: ActionLogin.fromJson(json['action_login']),
+      action: Action.fromJson(json[action]),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "action_login": actionLogin.toJson(),
-      };
-}
-
-ActionLogin actionLoginModelFromJson(String str) => ActionLogin.fromJson(json.decode(str));
-
-String actionLoginModelToJson(ActionLogin data) => json.encode(data.toJson());
-
-class ActionLogin {
-  ActionLogin({
-    required this.token,
-  });
-
-  final String token;
-
-  ActionLogin copyWith({
-    required String token,
-  }) {
-    return ActionLogin(
-      token: token,
-    );
-  }
-
-  factory ActionLogin.fromJson(Map<String, dynamic> json) {
-    return ActionLogin(
-      token: json["token"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "token": token,
+        "action_login": action,
+        "action_register": action,
       };
 }

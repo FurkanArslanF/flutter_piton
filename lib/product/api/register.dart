@@ -1,33 +1,34 @@
 import 'dart:io';
 import 'package:flutter_piton/product/api/dio_mixin.dart';
-import 'package:flutter_piton/product/entities/login.dart';
+import 'package:flutter_piton/product/entities/register.dart';
 import 'package:flutter_piton/product/entities/token.dart';
 
-abstract class ILoginService {
-  Future<TokenModel> login({required LoginModel accountData});
+abstract class IRegisterService {
+  Future<TokenModel> register({required RegisterModel accountData});
 }
 
-class LoginApiService extends ILoginService with DioServiceMixin {
-  LoginApiService._();
-  static final instance = LoginApiService._();
-  static const apiHttps = 'login';
+class RegisterApiService extends IRegisterService with DioServiceMixin {
+  RegisterApiService._();
+  static final instance = RegisterApiService._();
+  static const apiHttps = 'register';
 
   late TokenModel _token;
 
   @override
-  Future<TokenModel> login({required LoginModel accountData}) async {
+  Future<TokenModel> register({required RegisterModel accountData}) async {
     try {
       final response = await dio.post(
         apiHttps,
         data: {
           "email": accountData.email,
+          "name": accountData.name,
           "password": accountData.password,
         },
       );
       if (response.statusCode == HttpStatus.ok) {
         final data = response.data;
         if (data is Map<String, dynamic>) {
-          _token = TokenModel.fromJson(data, action: 'action_login');
+          _token = TokenModel.fromJson(data, action: 'action_register');
         }
         return _token;
       }

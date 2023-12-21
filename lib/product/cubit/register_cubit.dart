@@ -1,15 +1,15 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
-import 'package:flutter_piton/product/api/login.dart';
-import 'package:flutter_piton/product/entities/login.dart';
+import 'package:flutter_piton/product/api/register.dart';
+import 'package:flutter_piton/product/entities/register.dart';
 import 'package:kartal/kartal.dart';
 
-class LoginCubit extends Cubit<String> {
-  LoginCubit() : super("");
+class RegisterCubit extends Cubit<String> {
+  RegisterCubit() : super("");
 
-  Future<void> login(LoginModel accountData) async {
+  Future<void> register(RegisterModel accountData) async {
     try {
-      final request = await LoginApiService.instance.login(accountData: accountData);
+      final request = await RegisterApiService.instance.register(accountData: accountData);
       if (request.action.token.ext.isNotNullOrNoEmpty) {
         emit("success");
       } else if (request.action.token.ext.isNullOrEmpty) {

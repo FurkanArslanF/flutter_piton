@@ -14,7 +14,7 @@ class AppTextFormField extends StatelessWidget {
       child: TextFormField(
         obscureText: obscureText,
         controller: controller,
-        keyboardType: obscureText ? TextInputType.number : TextInputType.emailAddress,
+        keyboardType: obscureText ? TextInputType.text : TextInputType.emailAddress,
         inputFormatters: [
           obscureText ? LengthLimitingTextInputFormatter(20) : FilteringTextInputFormatter.deny(RegExp(r"\s")),
         ],

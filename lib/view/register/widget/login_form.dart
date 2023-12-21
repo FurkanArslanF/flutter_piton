@@ -1,12 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_piton/product/cubit/login_cubit.dart';
-import 'package:flutter_piton/product/entities/login.dart';
+import 'package:flutter_piton/product/cubit/register_cubit.dart';
+import 'package:flutter_piton/product/entities/register.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
+import 'package:flutter_piton/product/utility/constant/app_constant.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/toastr/toastr.dart';
 import 'package:flutter_piton/view/register/widget/title_and_textfield.dart';
@@ -74,13 +73,14 @@ class _RegisterFormState extends State<RegisterForm> {
       passwordvalide = false;
     });
     if (nameController.text.ext.isNotNullOrNoEmpty && emailController.text.ext.isNotNullOrNoEmpty && (passwordController.text.ext.isNotNullOrNoEmpty && passwordController.text.length >= 6)) {
-      final loginModel = LoginModel(
+      final registerModel = RegisterModel(
         email: emailController.text,
+        name: nameController.text,
         password: passwordController.text,
       );
-      await context.read<LoginCubit>().login(loginModel);
+      await context.read<RegisterCubit>().register(registerModel);
       if (context.mounted) {
-        final state = context.read<LoginCubit>().state;
+        final state = context.read<RegisterCubit>().state;
         if (state == "success") {
           context.go(RouterManager.home);
         } else {
@@ -98,13 +98,15 @@ class _RegisterFormState extends State<RegisterForm> {
           emailvalide = true;
         });
       }
-      if (passwordController.text.ext.isNullOrEmpty || passwordController.text.length < 6) {
+      if (passwordController.text.ext.isNullOrEmpty || passwordController.text.length < 6 || !AppConstants.isAlphanumeric(passwordController.text)) {
         setState(() {
           passwordvalide = true;
-          if (passwordController.text.ext.isNullOrEmpty) {
-            passwordvalideText = "Lütfen şifrenizi giriniz";
-          } else {
+          if (passwordController.text.isEmpty) {
+            passwordvalideText = "Lütfen şifrenizi oluşturun";
+          } else if (passwordController.text.length < 6) {
             passwordvalideText = "Şifreniz en az 6 karakter olmalıdır";
+          } else {
+            passwordvalideText = "Şifreniz alfanümerik olmalıdır";
           }
         });
       }
