@@ -6,18 +6,17 @@ import 'package:sizer/sizer.dart';
 PreferredSizeWidget appAppbar(BuildContext context, String title, {bool isBack = false}) {
   return AppBar(
     elevation: 0.5,
+    iconTheme: const IconThemeData(color: Colors.black),
     foregroundColor: Colors.white,
     backgroundColor: Colors.white,
     shadowColor: Colors.black,
     toolbarHeight: 17.w,
-    leading: Padding(
-      padding: context.padding.onlyLeftNormal,
-      child: isBack
-          ? null
-          : AppLogo(
-              width: 20.w,
-            ),
-    ),
+    leading: isBack
+        ? null
+        : Padding(
+            padding: context.padding.onlyLeftNormal,
+            child: AppLogo(width: 20.w),
+          ),
     leadingWidth: 17.w,
     actions: [
       Padding(

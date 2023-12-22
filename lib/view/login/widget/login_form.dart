@@ -71,7 +71,6 @@ class _LoginFormState extends State<LoginForm> {
       await context.read<LoginCubit>().login(loginModel);
       if (context.mounted) {
         final state = context.read<LoginCubit>().state;
-        debugPrint("state: $state");
         if (state == StateEnum.success) {
           ToastrMsg.instance.showToastrMsg(context, "Success");
           context.go(RouterManager.home);

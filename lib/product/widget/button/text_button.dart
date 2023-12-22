@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_piton/product/utility/constant/app_constant.dart';
-
 import 'package:kartal/kartal.dart';
 
 class NormalTextButton extends StatelessWidget {
-  const NormalTextButton({super.key, this.onPressed, required this.buttonText});
+  const NormalTextButton({super.key, this.onPressed, required this.buttonText, this.color = const Color(0xFF6251DD)});
   final void Function()? onPressed;
   final String buttonText;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class NormalTextButton extends StatelessWidget {
         buttonText,
         style: context.general.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.w600,
-          color: AppConstants.textButtonColor,
+          color: color,
         ),
       ),
     );

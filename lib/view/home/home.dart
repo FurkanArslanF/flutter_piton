@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_piton/product/widget/appbar/appbar.dart';
-import 'package:flutter_piton/view/home/widget/category_list.dart';
+import 'package:flutter_piton/product/widget/search/search.dart';
+import 'package:flutter_piton/view/home/widget/categories_list.dart';
+import 'package:flutter_piton/view/home/widget/category_top_list.dart';
 import 'package:kartal/kartal.dart';
-import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,11 +12,17 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appAppbar(context, "Catalog"),
-      body: Column(
-        children: [
-          context.sized.emptySizedHeightBoxLow, 
-          SizedBox(width: 100.w, height: 18.w, child: const CategoryList()),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            context.sized.emptySizedHeightBoxLow,
+            const CategoryTopList(),
+            const AppSearchBar(),
+            context.sized.emptySizedHeightBoxLow,
+            const CategoriesList(),
+            context.sized.emptySizedHeightBoxHigh,
+          ],
+        ),
       ),
     );
   }
