@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_piton/product/entities/category.dart';
+import 'package:flutter_piton/product/entities/product.dart';
 import 'package:flutter_piton/view/details/category.dart';
+import 'package:flutter_piton/view/details/product.dart';
 import 'package:flutter_piton/view/register/register.dart';
 import 'package:flutter_piton/view/error.dart';
 import 'package:flutter_piton/view/home/home.dart';
@@ -15,6 +17,7 @@ class RouterManager {
   static const login = '/login';
   static const register = '/register';
   static const categoryDetails = '/categoryDetails';
+  static const productDetails = '/productDetails';
 
   static Widget _splashRoute(BuildContext context, GoRouterState state) => const SplashScreen();
   static Widget _homeRoute(BuildContext context, GoRouterState state) => const HomeScreen();
@@ -24,6 +27,13 @@ class RouterManager {
   static Widget _categoryDetailsRoute(BuildContext context, GoRouterState state) {
     var extra = state.extra as Category;
     return CategoryDetailsScreen(category: extra);
+  }
+
+  static Widget _productDetailsRoute(BuildContext context, GoRouterState state) {
+    var extra = state.extra as Product;
+    return ProductDetailsScreen(
+      product: extra,
+    );
   }
 
   static Widget _errorRoute(BuildContext context, GoRouterState state) => const ErrorScreen();
@@ -36,6 +46,7 @@ class RouterManager {
       GoRoute(path: login, builder: _loginRoute),
       GoRoute(path: register, builder: _registerRoute),
       GoRoute(path: categoryDetails, builder: _categoryDetailsRoute),
+      GoRoute(path: productDetails, builder: _productDetailsRoute),
     ],
   );
   static final RouterManager _instance = RouterManager._();

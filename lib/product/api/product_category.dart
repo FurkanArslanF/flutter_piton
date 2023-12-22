@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:flutter_piton/product/api/dio_mixin.dart';
 import 'package:flutter_piton/product/entities/product_category.dart';
 

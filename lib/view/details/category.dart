@@ -4,11 +4,13 @@ import 'package:flutter_piton/product/cubit/product_category_cubit.dart';
 import 'package:flutter_piton/product/entities/category.dart';
 import 'package:flutter_piton/product/entities/product.dart';
 import 'package:flutter_piton/product/entities/product_category.dart';
+import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
 import 'package:flutter_piton/product/widget/appbar/appbar.dart';
 import 'package:flutter_piton/product/widget/card/card.dart';
 import 'package:flutter_piton/product/widget/image/image.dart';
 import 'package:flutter_piton/product/widget/search/search.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kartal/kartal.dart';
 import 'package:sizer/sizer.dart';
 
@@ -55,7 +57,7 @@ class CategoryDetailsScreenBuilder extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            debugPrint("Product Id: ${state.product[index].id}");
+                            context.push(RouterManager.productDetails, extra: state.product[index]);
                           },
                           child: Products(
                             product: state.product[index],
