@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_piton/product/cubit/product_category_cubit.dart';
 import 'package:flutter_piton/product/entities/category.dart';
@@ -37,13 +36,13 @@ class CategoryDetailsScreenBuilder extends StatelessWidget {
         builder: (context, state) {
           return SingleChildScrollView(
             child: SizedBox(
-              height: 140.h,
+              height: 120.h,
               child: Column(
                 children: [
                   context.sized.emptySizedHeightBoxLow,
                   const AppSearchBar(),
                   SizedBox(
-                    height: 120.h,
+                    height: 110.h,
                     child: GridView.builder(
                       cacheExtent: 1000,
                       physics: const NeverScrollableScrollPhysics(),
@@ -51,11 +50,16 @@ class CategoryDetailsScreenBuilder extends StatelessWidget {
                       itemCount: state.product.length,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.58,
+                        childAspectRatio: 0.6,
                       ),
                       itemBuilder: (context, index) {
-                        return Products(
-                          product: state.product[index],
+                        return InkWell(
+                          onTap: () {
+                            debugPrint("Product Id: ${state.product[index].id}");
+                          },
+                          child: Products(
+                            product: state.product[index],
+                          ),
                         );
                       },
                     ),
@@ -84,13 +88,13 @@ class Products extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          context.sized.emptySizedHeightBoxLow,
+          //context.sized.emptySizedHeightBoxLow,
           AppImage(imgPath: product.cover ?? "", width: 45),
           Padding(
             padding: context.padding.onlyLeftNormal,
             child: Text(
               AppConstants.capitalize(product.name ?? ""),
-              style: context.general.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, fontSize: 8.sp),
+              style: context.general.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, fontSize: 7.sp),
               textAlign: TextAlign.start,
             ),
           ),
@@ -100,11 +104,9 @@ class Products extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Expanded(
-                  child: Text(
-                    product.author ?? "",
-                    style: context.general.textTheme.bodySmall?.copyWith(color: Colors.grey.shade600, fontWeight: FontWeight.w600, fontSize: 7.sp),
-                  ),
+                Text(
+                  product.author ?? "",
+                  style: context.general.textTheme.bodySmall?.copyWith(color: Colors.grey.shade600, fontWeight: FontWeight.w600, fontSize: 5.5.sp),
                 ),
                 Text(
                   "${product.price} \$",

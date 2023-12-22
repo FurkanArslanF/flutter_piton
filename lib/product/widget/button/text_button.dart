@@ -11,6 +11,9 @@ class NormalTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.zero,
+      ),
       child: Text(
         buttonText,
         style: context.general.textTheme.bodyMedium?.copyWith(

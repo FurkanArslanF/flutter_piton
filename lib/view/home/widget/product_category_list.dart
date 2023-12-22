@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_piton/product/cubit/product_category_cubit.dart';
 import 'package:flutter_piton/product/entities/product.dart';
@@ -68,7 +66,7 @@ class Products extends StatelessWidget {
         children: [
           AppImage(imgPath: product.cover ?? "", width: 26),
           Container(
-            margin: context.padding.onlyTopMedium + context.padding.onlyBottomMedium,
+            margin: context.padding.onlyTopNormal + context.padding.onlyBottomNormal,
             width: 25.w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,6 +83,7 @@ class Products extends StatelessWidget {
                     style: context.general.textTheme.bodySmall?.copyWith(color: Colors.grey.shade600, fontWeight: FontWeight.w600, fontSize: 7.sp),
                   ),
                 ),
+                context.sized.emptySizedHeightBoxLow,
                 Expanded(
                   child: Text(
                     "${product.price} \$",

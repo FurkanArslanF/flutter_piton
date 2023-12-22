@@ -5,7 +5,6 @@ import 'package:flutter_piton/product/api/image.dart';
 
 class ImageCubit extends Cubit<String> {
   ImageCubit() : super("");
-
   fetchImageUrl(String imgPath) async {
     try {
       final url = await ImageApiService.instance.imageUrl(imgPath: imgPath);

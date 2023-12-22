@@ -27,11 +27,18 @@ class AppImageBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ImageCubit, String>(
       builder: (context, state) {
-        return CachedNetworkImage(
-          imageUrl: state,
-          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => const Center(child: CircularProgressIndicator()),
-          width: imgWidth.w,
+        return Container(
+          height: 65.w,
+          padding: EdgeInsets.zero,
+          margin: EdgeInsets.zero,
+          //color: Colors.amber,
+          child: CachedNetworkImage(
+            fit: BoxFit.cover,
+            imageUrl: state,
+            //placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) => const Center(child: CircularProgressIndicator()),
+            width: imgWidth.w,
+          ),
         );
       },
     );

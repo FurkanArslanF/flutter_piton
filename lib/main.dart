@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_piton/product/cubit/login_cubit.dart';
 import 'package:flutter_piton/product/cubit/register_cubit.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
+import 'package:flutter_piton/product/utility/theme/theme.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
             routeInformationProvider: RouterManager.instance.router.routeInformationProvider,
             routeInformationParser: RouterManager.instance.router.routeInformationParser,
             routerDelegate: RouterManager.instance.router.routerDelegate,
+            theme: AppTheme.appTheme(),
           );
         },
       ),

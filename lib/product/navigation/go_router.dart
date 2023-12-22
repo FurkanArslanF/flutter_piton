@@ -31,7 +31,7 @@ class RouterManager {
   final GoRouter _router = GoRouter(
     errorBuilder: _errorRoute,
     routes: <RouteBase>[
-      GoRoute(path: root, builder: _homeRoute),
+      GoRoute(path: root, builder: _splashRoute),
       GoRoute(path: home, builder: _homeRoute),
       GoRoute(path: login, builder: _loginRoute),
       GoRoute(path: register, builder: _registerRoute),

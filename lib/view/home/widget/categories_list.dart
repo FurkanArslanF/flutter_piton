@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_piton/product/cubit/categories_cubit.dart';
 import 'package:flutter_piton/product/entities/categories.dart';
@@ -31,7 +32,8 @@ class CategoriesListBuilder extends StatelessWidget {
     return BlocBuilder<CategoriesCubit, CategoriesModel>(
       builder: (context, state) {
         return SizedBox(
-          height: 110.h,
+          //color: Colors.amber,
+          height: 100.h,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             padding: context.padding.onlyLeftNormal + context.padding.onlyRightNormal,
