@@ -18,7 +18,7 @@ class ToastrMsg {
           width: 100.w,
           height: 15.w,
           child: Card(
-            color: AppConstants.elevetedButtonBgColor,
+            color: AppConstants.widgetSelectedBg,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: Center(
               child: Text(
@@ -31,7 +31,7 @@ class ToastrMsg {
           ),
         ),
       ),
-      gravity: ToastGravity.TOP,
+      gravity: ToastGravity.BOTTOM,
       toastDuration: const Duration(seconds: 3),
     );
   }

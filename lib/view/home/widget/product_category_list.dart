@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_piton/product/cubit/product_category_cubit.dart';
 import 'package:flutter_piton/product/entities/product.dart';
 import 'package:flutter_piton/product/entities/product_category.dart';
+import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
 import 'package:flutter_piton/product/widget/card/card.dart';
 import 'package:flutter_piton/product/widget/image/image.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kartal/kartal.dart';
 import 'package:sizer/sizer.dart';
 
@@ -37,7 +39,7 @@ class ProductCategoryListBuilder extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                debugPrint("Product Id: ${state.product[index].id}");
+                context.push(RouterManager.productDetails, extra: state.product[index]);
               },
               child: SizedBox(
                 width: 55.w,

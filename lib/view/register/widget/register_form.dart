@@ -13,14 +13,26 @@ import 'package:flutter_piton/view/register/widget/title_and_textfield.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kartal/kartal.dart';
 
-class RegisterForm extends StatefulWidget {
+class RegisterForm extends StatelessWidget {
   const RegisterForm({super.key});
 
   @override
-  State<RegisterForm> createState() => _RegisterFormState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => RegisterCubit(),
+      child: const RegisterFormBuilder(),
+    );
+  }
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class RegisterFormBuilder extends StatefulWidget {
+  const RegisterFormBuilder({super.key});
+
+  @override
+  State<RegisterFormBuilder> createState() => _RegisterFormBuilderState();
+}
+
+class _RegisterFormBuilderState extends State<RegisterFormBuilder> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -57,23 +69,28 @@ class _RegisterFormState extends State<RegisterForm> {
           height: 39,
         ),
         //context.sized.emptySizedHeightBoxNormal,
-        NormalElevetedButton(
-          buttonText: "Register",
-          onPressed: () async {
-            login(context);
+        BlocBuilder<RegisterCubit, String>(
+          builder: (context, state) {
+            return NormalElevetedButton(
+              buttonText: "Register",
+              state: state,
+              onPressed: () async {
+                register(context, state);
+              },
+            );
           },
         ),
       ],
     );
   }
 
-  Future<void> login(BuildContext context) async {
+  Future<void> register(BuildContext context, String registerState) async {
     setState(() {
       namevalide = false;
       emailvalide = false;
       passwordvalide = false;
     });
-    if (nameController.text.ext.isNotNullOrNoEmpty && emailController.text.ext.isNotNullOrNoEmpty && (passwordController.text.ext.isNotNullOrNoEmpty && passwordController.text.length >= 6)) {
+    if (nameController.text.ext.isNotNullOrNoEmpty && (emailController.text.ext.isNotNullOrNoEmpty && emailController.text.contains("@")) && (passwordController.text.ext.isNotNullOrNoEmpty && passwordController.text.length >= 6)) {
       final registerModel = RegisterModel(
         email: emailController.text,
         name: nameController.text,
@@ -81,12 +98,11 @@ class _RegisterFormState extends State<RegisterForm> {
       );
       await context.read<RegisterCubit>().register(registerModel);
       if (context.mounted) {
-        final state = context.read<RegisterCubit>().state;
-        if (state == StateEnum.success) {
-          ToastrMsg.instance.showToastrMsg(context, "Success");
+        if (registerState == "success") {
+          ToastrMsg.instance.showToastrMsg(context, "Giriş başarılı");
           context.go(RouterManager.home);
         } else {
-          ToastrMsg.instance.showToastrMsg(context, "Error");
+          ToastrMsg.instance.showToastrMsg(context, "Kayıt başarısız");
         }
       }
     } else {

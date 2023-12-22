@@ -5,21 +5,32 @@ import 'package:flutter_piton/product/cubit/login_cubit.dart';
 import 'package:flutter_piton/product/entities/login.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
-import 'package:flutter_piton/product/utility/enum/state_enum.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/toastr/toastr.dart';
 import 'package:flutter_piton/view/login/widget/title_and_textfield.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kartal/kartal.dart';
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => LoginCubit(),
+      child: const LoginFormBuilder(),
+    );
+  }
 }
 
-class _LoginFormState extends State<LoginForm> {
+class LoginFormBuilder extends StatefulWidget {
+  const LoginFormBuilder({super.key});
+
+  @override
+  State<LoginFormBuilder> createState() => _LoginFormBuilderState();
+}
+
+class _LoginFormBuilderState extends State<LoginFormBuilder> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool emailvalide = false;
@@ -47,10 +58,15 @@ class _LoginFormState extends State<LoginForm> {
         ),
         Padding(
           padding: context.padding.onlyTopMedium * 1.8,
-          child: NormalElevetedButton(
-            buttonText: "Login",
-            onPressed: () async {
-              login(context);
+          child: BlocBuilder<LoginCubit, String>(
+            builder: (context, state) {
+              return NormalElevetedButton(
+                buttonText: "Login",
+                state: state,
+                onPressed: () async {
+                  login(context, state);
+                },
+              );
             },
           ),
         ),
@@ -58,24 +74,23 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Future<void> login(BuildContext context) async {
+  Future<void> login(BuildContext context, String loginState) async {
     setState(() {
       emailvalide = false;
       passwordvalide = false;
     });
-    if (emailController.text.ext.isNotNullOrNoEmpty && (passwordController.text.ext.isNotNullOrNoEmpty && passwordController.text.length >= 6)) {
+    if ((emailController.text.ext.isNotNullOrNoEmpty && emailController.text.contains("@")) && (passwordController.text.ext.isNotNullOrNoEmpty && passwordController.text.length >= 6)) {
       final loginModel = LoginModel(
         email: emailController.text,
         password: passwordController.text,
       );
       await context.read<LoginCubit>().login(loginModel);
       if (context.mounted) {
-        final state = context.read<LoginCubit>().state;
-        if (state == StateEnum.success) {
-          ToastrMsg.instance.showToastrMsg(context, "Success");
+        if (loginState == "success") {
+          ToastrMsg.instance.showToastrMsg(context, "Giriş başarılı");
           context.go(RouterManager.home);
         } else {
-          ToastrMsg.instance.showToastrMsg(context, "Error");
+          ToastrMsg.instance.showToastrMsg(context, "Kullanıcı adı veya şifre hatalı");
         }
       }
     } else {

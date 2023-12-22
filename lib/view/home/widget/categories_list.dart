@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,8 +33,7 @@ class CategoriesListBuilder extends StatelessWidget {
     return BlocBuilder<CategoriesCubit, CategoriesModel>(
       builder: (context, state) {
         return SizedBox(
-          //color: Colors.amber,
-          height: 100.h,
+          height: 110.h,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             padding: context.padding.onlyLeftNormal + context.padding.onlyRightNormal,
@@ -57,6 +57,7 @@ class Categories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        context.sized.emptySizedHeightBoxLow,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

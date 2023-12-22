@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_piton/product/widget/logo.dart';
 import 'package:flutter_piton/product/widget/text/normal_and_bold_text.dart';
-import 'package:flutter_piton/view/register/widget/login_form.dart';
+import 'package:flutter_piton/view/register/widget/register_form.dart';
 import 'package:kartal/kartal.dart';
 import 'package:sizer/sizer.dart';
 
