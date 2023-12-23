@@ -22,6 +22,7 @@ class NormalAndBoldText extends StatelessWidget {
           style: context.general.textTheme.bodyLarge?.copyWith(
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
+            fontFamily: "ManropeBold"
           ),
         ),
       ],

@@ -33,7 +33,7 @@ class AppImageBuilder extends StatelessWidget {
           margin: EdgeInsets.zero,
           //color: Colors.amber,
           child: CachedNetworkImage(
-            fit: BoxFit.cover,
+            //fit: BoxFit.cover,
             imageUrl: state,
             //placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
             errorWidget: (context, url, error) => const Center(child: CircularProgressIndicator()),

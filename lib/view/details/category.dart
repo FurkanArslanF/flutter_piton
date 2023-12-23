@@ -115,6 +115,7 @@ class Products extends StatelessWidget {
                   style: context.general.textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppConstants.widgetSelectedBg,
+                    fontFamily: "ManropeBold"
                   ),
                 ),
               ],

@@ -30,10 +30,14 @@ flutter:
   uses-material-design: true
 
   fonts:
-  - family: monrope
+  - family: ManropeRegular
     fonts:
-      - asset: assets/fonts/montope.ttf
+      - asset: assets/fonts/Manrope-Regular.ttf
         weight: 400
+  - family: MonropeBold
+    fonts:
+      - asset: assets/fonts/Manrope-Bold.ttf
+        weight: 700
 
   assets:
     - assets/

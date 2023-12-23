@@ -30,9 +30,6 @@ class _SplashScreenState extends State<SplashScreen> {
     var password = await SecureStorage().readSecureData("password");
     // ignore: use_build_context_synchronously
     var token = await context.read<LoginCubit>().login(LoginModel(email: email ?? "", password: password ?? ""));
-    debugPrint(token.action.token);
-    debugPrint(at);
-    debugPrint(email);
     if (at == token.action.token) {
       _timer = Timer(const Duration(seconds: 3), () {
         context.go(RouterManager.home);
@@ -77,7 +74,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 context.sized.emptySizedHeightBoxLow,
                 NormalTextButton(buttonText: "Skip", onPressed: () {
-                  context.go(RouterManager.home);
+                  SecureStorage().allDeleteSecureData();
+                  //context.go(RouterManager.home);
                 }),
               ],
             ),

@@ -85,12 +85,13 @@ class Products extends StatelessWidget {
                     style: context.general.textTheme.bodySmall?.copyWith(color: Colors.grey.shade600, fontWeight: FontWeight.w600, fontSize: 7.sp),
                   ),
                 ),
-                context.sized.emptySizedHeightBoxLow,
+                context.sized.emptySizedHeightBoxLow3x,
                 Expanded(
                   child: Text(
                     "${product.price} \$",
                     style: context.general.textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
+                      fontFamily: "ManropeBold",
                       color: AppConstants.widgetSelectedBg,
                     ),
                   ),

@@ -26,6 +26,7 @@ PreferredSizeWidget appAppbar(BuildContext context, String title, {bool isBack =
           style: context.general.textTheme.bodyLarge?.copyWith(
             fontSize: 15.sp,
             fontWeight: FontWeight.bold,
+            fontFamily: "ManropeBold"
           ),
         ),
       ),

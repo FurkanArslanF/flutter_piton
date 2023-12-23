@@ -26,7 +26,7 @@ class ProductDetailsScreen extends StatelessWidget {
             children: [
               ProductDisplay(product: product),
               context.sized.emptySizedHeightBoxLow3x,
-              Text(AppString.summary, style: context.general.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp)),
+              Text(AppString.summary, style: context.general.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontFamily: "ManropeBold", fontSize: 15.sp)),
               context.sized.emptySizedHeightBoxLow,
               Text(product.description ?? "", style: context.general.textTheme.bodyLarge),
               context.sized.emptySizedHeightBoxLow3x,
@@ -59,7 +59,7 @@ class ProductDisplay extends StatelessWidget {
             Text(
               //product.name.ext.toCapitalized(),
               AppConstants.capitalize(product.name ?? ""),
-              style: context.general.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+              style: context.general.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontFamily: "ManropeBold", fontSize: 15.sp),
             ),
             context.sized.emptySizedHeightBoxLow,
             Text(

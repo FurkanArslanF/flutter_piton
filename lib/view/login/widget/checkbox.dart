@@ -40,6 +40,7 @@ class _LoginCheckBoxState extends State<LoginCheckBox> {
                   AppString.rememberMe,
                   style: context.general.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
+                    fontFamily: "ManropeBold",
                     color: AppConstants.textButtonColor,
                   ),
                 ),
