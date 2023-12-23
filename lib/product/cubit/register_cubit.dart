@@ -5,9 +5,9 @@ import 'package:flutter_piton/product/entities/register.dart';
 import 'package:kartal/kartal.dart';
 
 class RegisterCubit extends Cubit<String> {
-  RegisterCubit() : super("");
+  RegisterCubit() : super("abcd");
 
-  register(RegisterModel accountData) async {
+  Future<void> register(RegisterModel accountData) async {
     emit("loading");
     var response = await RegisterApiService.instance.register(accountData: accountData);
     if (response.action.token.ext.isNotNullOrNoEmpty) {

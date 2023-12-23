@@ -7,14 +7,14 @@ TokenModel tokenModelFromJson(String str) => TokenModel.fromJson(json.decode(str
 String tokenModelToJson(TokenModel data) => json.encode(data.toJson());
 
 class TokenModel {
-  final Action action;
+  final ActionModel action;
 
   TokenModel({
     required this.action,
   });
 
   TokenModel copyWith({
-    required Action action,
+    required ActionModel action,
   }) {
     return TokenModel(
       action: action,
@@ -23,7 +23,7 @@ class TokenModel {
 
   factory TokenModel.fromJson(Map<String, dynamic> json, {String? action}) {
     return TokenModel(
-      action: Action.fromJson(json[action]),
+      action: ActionModel.fromJson(json[action]),
     );
   }
 

@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_piton/product/cubit/login_cubit.dart';
+import 'package:flutter_piton/product/entities/login.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
+import 'package:flutter_piton/product/storage/secure_storage.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/button/text_button.dart';
@@ -19,13 +23,24 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late Timer _timer;
-  void redirect() {
-    // Future.delayed(const Duration(seconds: 3), () {
-    //   context.go(RouterManager.login);
-    // });
-    _timer = Timer(const Duration(seconds: 3), () {
-      context.go(RouterManager.login);
-    });
+  void redirect() async {
+    var at = await SecureStorage().readSecureData("at");
+    var email = await SecureStorage().readSecureData("email");
+    var password = await SecureStorage().readSecureData("password");
+    // ignore: use_build_context_synchronously
+    var token = await context.read<LoginCubit>().login(LoginModel(email: email ?? "", password: password ?? ""));
+    debugPrint(token.action.token);
+    debugPrint(at);
+    debugPrint(email);
+    if (at == token.action.token) {
+      _timer = Timer(const Duration(seconds: 3), () {
+        context.go(RouterManager.login);
+      });
+    } else {
+      _timer = Timer(const Duration(seconds: 3), () {
+        context.go(RouterManager.login);
+      });
+    }
   }
 
   @override

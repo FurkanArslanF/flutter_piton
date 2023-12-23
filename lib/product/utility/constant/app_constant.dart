@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppConstants {
-  static bool isAlphanumeric(String str) {
-    return RegExp(r'^[a-zA-Z0-9]+$').hasMatch(str);
-  }
 
+  static bool isAlphanumeric(String str) {
+    return RegExp(r'^(?=.*?[a-z])(?=.*?[0-9]).{6,}$').hasMatch(str);
+  }
+  static RegExp regex = RegExp(r'^(?=.*?[a-z])(?=.*?[0-9]).{6,}$');
   static String capitalize(String input) {
     return input.split(" ").map((str) => str.isNotEmpty ? str[0].toUpperCase() + str.substring(1) : "").join(" ");
   }

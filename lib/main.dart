@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_piton/product/cubit/checkbox.dart';
 import 'package:flutter_piton/product/cubit/login_cubit.dart';
-import 'package:flutter_piton/product/cubit/register_cubit.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/utility/theme/theme.dart';
 import 'package:sizer/sizer.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LoginCubit()),
-        BlocProvider(create: (context) => RegisterCubit()),
+        BlocProvider(create: (context) => CheckboxCubit()),
       ],
       child: Sizer(
         builder: (context, orientation, deviceType) {

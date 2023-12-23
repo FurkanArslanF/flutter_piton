@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_piton/product/cubit/register_cubit.dart';
 import 'package:flutter_piton/product/entities/register.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
+import 'package:flutter_piton/product/storage/secure_storage.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
-import 'package:flutter_piton/product/utility/enum/state_enum.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/toastr/toastr.dart';
 import 'package:flutter_piton/view/register/widget/title_and_textfield.dart';
@@ -40,6 +40,7 @@ class _RegisterFormBuilderState extends State<RegisterFormBuilder> {
   bool emailvalide = false;
   bool passwordvalide = false;
   String passwordvalideText = "";
+  String isLoading = "";
 
   @override
   Widget build(BuildContext context) {
@@ -69,42 +70,48 @@ class _RegisterFormBuilderState extends State<RegisterFormBuilder> {
           height: 39,
         ),
         //context.sized.emptySizedHeightBoxNormal,
-        BlocBuilder<RegisterCubit, String>(
-          builder: (context, state) {
-            return NormalElevetedButton(
-              buttonText: "Register",
-              state: state,
-              onPressed: () async {
-                register(context, state);
-              },
-            );
+        BlocListener<RegisterCubit, String>(
+          listener: (context, state) {
+            if (state == "success") {
+              ToastrMsg.instance.showToastrMsg(context, "Kayıt başarılı");
+              SecureStorage().deleteSecureData();
+              context.go(RouterManager.home);
+            } else if (state == "error") {
+              ToastrMsg.instance.showToastrMsg(context, "Kayıt başarısız");
+            } else {
+              setState(() {
+                isLoading = state;
+              });
+            }
           },
-        ),
+          child: NormalElevetedButton(
+            buttonText: "Register",
+            state: isLoading,
+            onPressed: () async {
+              register(context);
+            },
+          ),
+        )
       ],
     );
   }
 
-  Future<void> register(BuildContext context, String registerState) async {
+  Future<void> register(BuildContext context) async {
+    debugPrint(AppConstants.isAlphanumeric(passwordController.text).toString());
     setState(() {
       namevalide = false;
       emailvalide = false;
       passwordvalide = false;
     });
-    if (nameController.text.ext.isNotNullOrNoEmpty && (emailController.text.ext.isNotNullOrNoEmpty && emailController.text.contains("@")) && (passwordController.text.ext.isNotNullOrNoEmpty && passwordController.text.length >= 6)) {
+    if (nameController.text.ext.isNotNullOrNoEmpty &&
+        (emailController.text.ext.isNotNullOrNoEmpty && emailController.text.contains("@")) &&
+        (passwordController.text.ext.isNotNullOrNoEmpty && passwordController.text.length >= 6 && AppConstants.isAlphanumeric(passwordController.text))) {
       final registerModel = RegisterModel(
         email: emailController.text,
         name: nameController.text,
         password: passwordController.text,
       );
       await context.read<RegisterCubit>().register(registerModel);
-      if (context.mounted) {
-        if (registerState == "success") {
-          ToastrMsg.instance.showToastrMsg(context, "Giriş başarılı");
-          context.go(RouterManager.home);
-        } else {
-          ToastrMsg.instance.showToastrMsg(context, "Kayıt başarısız");
-        }
-      }
     } else {
       if (nameController.text.ext.isNullOrEmpty) {
         setState(() {
@@ -116,15 +123,15 @@ class _RegisterFormBuilderState extends State<RegisterFormBuilder> {
           emailvalide = true;
         });
       }
-      if (passwordController.text.ext.isNullOrEmpty || passwordController.text.length < 6 || !AppConstants.isAlphanumeric(passwordController.text)) {
+      if (passwordController.text.ext.isNullOrEmpty || passwordController.text.length < 6 || AppConstants.isAlphanumeric(passwordController.text) == false) {
         setState(() {
           passwordvalide = true;
           if (passwordController.text.isEmpty) {
             passwordvalideText = "Lütfen şifrenizi oluşturun";
           } else if (passwordController.text.length < 6) {
             passwordvalideText = "Şifreniz en az 6 karakter olmalıdır";
-          } else {
-            passwordvalideText = "Şifreniz alfanümerik olmalıdır";
+          } else if (!AppConstants.isAlphanumeric(passwordController.text)) {
+            passwordvalideText = "Şifreniz sadece harf ve rakamlardan oluşmalıdır";
           }
         });
       }

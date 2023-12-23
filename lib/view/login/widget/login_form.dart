@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_piton/product/cubit/checkbox.dart';
 import 'package:flutter_piton/product/cubit/login_cubit.dart';
 import 'package:flutter_piton/product/entities/login.dart';
+import 'package:flutter_piton/product/entities/token.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
+import 'package:flutter_piton/product/storage/secure_storage.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/toastr/toastr.dart';
@@ -16,8 +19,10 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => LoginCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => LoginCubit()),
+      ],
       child: const LoginFormBuilder(),
     );
   }
@@ -36,6 +41,7 @@ class _LoginFormBuilderState extends State<LoginFormBuilder> {
   bool emailvalide = false;
   bool passwordvalide = false;
   String passwordvalideText = "";
+  String isLoading = "";
 
   @override
   Widget build(BuildContext context) {
@@ -56,25 +62,46 @@ class _LoginFormBuilderState extends State<LoginFormBuilder> {
           obscureText: true,
           height: 45,
         ),
-        Padding(
-          padding: context.padding.onlyTopMedium * 1.8,
-          child: BlocBuilder<LoginCubit, String>(
-            builder: (context, state) {
-              return NormalElevetedButton(
-                buttonText: "Login",
-                state: state,
-                onPressed: () async {
-                  login(context, state);
-                },
-              );
-            },
+        MultiBlocListener(
+          listeners: [
+            BlocListener<LoginCubit, TokenModel>(
+              listener: (context, loginState) {
+                debugPrint("blocklistener");
+                if (context.read<CheckboxCubit>().state == true) {
+                  debugPrint("checkbox true");
+                  SecureStorage().writeSecureData("email", emailController.text);
+                  SecureStorage().writeSecureData("password", passwordController.text);
+                  SecureStorage().writeSecureData("at", loginState.action.token);
+                }
+                if (loginState.action.token.ext.isNotNullOrNoEmpty) {
+                  ToastrMsg.instance.showToastrMsg(context, "Giriş başarılı");
+                  context.go(RouterManager.home);
+                } else if (loginState.action.token.ext.isNullOrEmpty) {
+                  ToastrMsg.instance.showToastrMsg(context, "Giriş başarısız");
+                } else {
+                  setState(() {
+                    isLoading = "loading";
+                  });
+                }
+              },
+            ),
+          ],
+          child: Padding(
+            padding: context.padding.onlyTopMedium * 1.8,
+            child: NormalElevetedButton(
+              buttonText: "Login",
+              state: isLoading,
+              onPressed: () async {
+                login(context);
+              },
+            ),
           ),
         ),
       ],
     );
   }
 
-  Future<void> login(BuildContext context, String loginState) async {
+  Future<void> login(BuildContext context) async {
     setState(() {
       emailvalide = false;
       passwordvalide = false;
@@ -85,14 +112,6 @@ class _LoginFormBuilderState extends State<LoginFormBuilder> {
         password: passwordController.text,
       );
       await context.read<LoginCubit>().login(loginModel);
-      if (context.mounted) {
-        if (loginState == "success") {
-          ToastrMsg.instance.showToastrMsg(context, "Giriş başarılı");
-          context.go(RouterManager.home);
-        } else {
-          ToastrMsg.instance.showToastrMsg(context, "Kullanıcı adı veya şifre hatalı");
-        }
-      }
     } else {
       if (emailController.text.ext.isNullOrEmpty || !emailController.text.contains("@")) {
         setState(() {

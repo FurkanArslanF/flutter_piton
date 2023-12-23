@@ -1,26 +1,26 @@
 import 'dart:convert';
 
-Action actionModelFromJson(String str) => Action.fromJson(json.decode(str));
+ActionModel actionModelFromJson(String str) => ActionModel.fromJson(json.decode(str));
 
-String actionModelToJson(Action data) => json.encode(data.toJson());
+String actionModelToJson(ActionModel data) => json.encode(data.toJson());
 
-class Action {
-  Action({
+class ActionModel {
+  ActionModel({
     required this.token,
   });
 
   final String token;
 
-  Action copyWith({
+  ActionModel copyWith({
     required String token,
   }) {
-    return Action(
+    return ActionModel(
       token: token,
     );
   }
 
-  factory Action.fromJson(Map<String, dynamic> json) {
-    return Action(
+  factory ActionModel.fromJson(Map<String, dynamic> json) {
+    return ActionModel(
       token: json["token"],
     );
   }
