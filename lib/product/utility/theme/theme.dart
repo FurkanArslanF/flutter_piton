@@ -7,6 +7,7 @@ class AppTheme {
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
       focusColor: Colors.transparent,
+      fontFamily: "monrope",
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.transparent),
