@@ -23,6 +23,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late Timer _timer;
+  
   void redirect() async {
     var at = await SecureStorage().readSecureData("at");
     var email = await SecureStorage().readSecureData("email");
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     debugPrint(email);
     if (at == token.action.token) {
       _timer = Timer(const Duration(seconds: 3), () {
-        context.go(RouterManager.login);
+        context.go(RouterManager.home);
       });
     } else {
       _timer = Timer(const Duration(seconds: 3), () {
@@ -75,7 +76,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   },
                 ),
                 context.sized.emptySizedHeightBoxLow,
-                NormalTextButton(buttonText: "Skip", onPressed: () {}),
+                NormalTextButton(buttonText: "Skip", onPressed: () {
+                  context.go(RouterManager.home);
+                }),
               ],
             ),
           ),

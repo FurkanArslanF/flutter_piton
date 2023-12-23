@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_piton/product/entities/product.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
+import 'package:flutter_piton/product/utility/constant/app_string.dart';
 import 'package:flutter_piton/product/widget/appbar/appbar.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/image/image.dart';
@@ -15,7 +16,7 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appAppbar(context, "Book Details", isBack: true),
+      appBar: appAppbar(context, AppString.bookDetails, isBack: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: context.padding.onlyTopNormal + context.padding.onlyBottomNormal + context.padding.horizontalNormal,
@@ -25,7 +26,7 @@ class ProductDetailsScreen extends StatelessWidget {
             children: [
               ProductDisplay(product: product),
               context.sized.emptySizedHeightBoxLow3x,
-              Text("Summary", style: context.general.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp)),
+              Text(AppString.summary, style: context.general.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp)),
               context.sized.emptySizedHeightBoxLow,
               Text(product.description ?? "", style: context.general.textTheme.bodyLarge),
               context.sized.emptySizedHeightBoxLow3x,

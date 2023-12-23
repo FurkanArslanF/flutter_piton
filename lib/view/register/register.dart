@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_piton/product/utility/constant/app_string.dart';
 import 'package:flutter_piton/product/widget/logo.dart';
 import 'package:flutter_piton/product/widget/text/normal_and_bold_text.dart';
 import 'package:flutter_piton/view/register/widget/register_form.dart';
@@ -30,8 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               context.sized.emptySizedHeightBoxHigh,
               const NormalAndBoldText(
-                normalText: "Welcome back!",
-                boldText: "Register an account",
+                normalText: AppString.registerWelcomeBack,
+                boldText: AppString.registerRegisterAnAccount,
               ),
               context.sized.emptySizedHeightBoxHigh,
               const RegisterForm(),

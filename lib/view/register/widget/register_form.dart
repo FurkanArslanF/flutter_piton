@@ -7,6 +7,7 @@ import 'package:flutter_piton/product/entities/register.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/storage/secure_storage.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
+import 'package:flutter_piton/product/utility/constant/app_string.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/toastr/toastr.dart';
 import 'package:flutter_piton/view/register/widget/title_and_textfield.dart';
@@ -49,51 +50,55 @@ class _RegisterFormBuilderState extends State<RegisterFormBuilder> {
       children: [
         RegisterTitleAndTextField(
           controller: nameController,
-          title: "Name",
+          title:  AppString.registerName,
           valide: namevalide,
-          valideText: "Lütfen geçerli bir isim giriniz",
+          valideText: AppString.nameValide,
           height: 26,
         ),
         RegisterTitleAndTextField(
           controller: emailController,
-          title: "Email",
+          title: AppString.email,
           valide: emailvalide,
-          valideText: "Lütfen geçerli bir email giriniz",
+          valideText: AppString.emailValide,
           height: 26,
         ),
         RegisterTitleAndTextField(
           controller: passwordController,
-          title: "Password",
+          title: AppString.password,
           valide: passwordvalide,
           valideText: passwordvalideText,
           obscureText: true,
           height: 39,
         ),
         //context.sized.emptySizedHeightBoxNormal,
-        BlocListener<RegisterCubit, String>(
-          listener: (context, state) {
-            if (state == "success") {
-              ToastrMsg.instance.showToastrMsg(context, "Kayıt başarılı");
-              SecureStorage().deleteSecureData();
-              context.go(RouterManager.home);
-            } else if (state == "error") {
-              ToastrMsg.instance.showToastrMsg(context, "Kayıt başarısız");
-            } else {
-              setState(() {
-                isLoading = state;
-              });
-            }
-          },
-          child: NormalElevetedButton(
-            buttonText: "Register",
-            state: isLoading,
-            onPressed: () async {
-              register(context);
-            },
-          ),
-        )
+        registerButton(context)
       ],
     );
+  }
+
+  BlocListener<RegisterCubit, String> registerButton(BuildContext context) {
+    return BlocListener<RegisterCubit, String>(
+        listener: (context, state) {
+          if (state == "success") {
+            ToastrMsg.instance.showToastrMsg(context, AppString.registerToastr);
+            SecureStorage().deleteSecureData();
+            context.go(RouterManager.home);
+          } else if (state == "error") {
+            ToastrMsg.instance.showToastrMsg(context, AppString.registerToastr2);
+          } else {
+            setState(() {
+              isLoading = state;
+            });
+          }
+        },
+        child: NormalElevetedButton(
+          buttonText: AppString.register,
+          state: isLoading,
+          onPressed: () async {
+            register(context);
+          },
+        ),
+      );
   }
 
   Future<void> register(BuildContext context) async {
@@ -127,11 +132,11 @@ class _RegisterFormBuilderState extends State<RegisterFormBuilder> {
         setState(() {
           passwordvalide = true;
           if (passwordController.text.isEmpty) {
-            passwordvalideText = "Lütfen şifrenizi oluşturun";
+            passwordvalideText = AppString.psswordValide;
           } else if (passwordController.text.length < 6) {
-            passwordvalideText = "Şifreniz en az 6 karakter olmalıdır";
+            passwordvalideText = AppString.passwordValide2;
           } else if (!AppConstants.isAlphanumeric(passwordController.text)) {
-            passwordvalideText = "Şifreniz sadece harf ve rakamlardan oluşmalıdır";
+            passwordvalideText = AppString.passwordValide3;
           }
         });
       }

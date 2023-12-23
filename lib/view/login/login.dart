@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_piton/product/utility/constant/app_string.dart';
 import 'package:flutter_piton/product/widget/logo.dart';
 import 'package:flutter_piton/product/widget/text/normal_and_bold_text.dart';
 import 'package:flutter_piton/view/login/widget/login_form.dart';
@@ -30,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               context.sized.emptySizedHeightBoxHigh,
               const NormalAndBoldText(
-                normalText: "Welcome back!",
-                boldText: "Login to your account",
+                normalText: AppString.loginWelcomeBack,
+                boldText: AppString.loginLoginToYourAccount,
               ),
               context.sized.emptySizedHeightBoxHigh,
               const LoginForm(),

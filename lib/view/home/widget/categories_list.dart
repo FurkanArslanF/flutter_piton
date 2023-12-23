@@ -7,6 +7,7 @@ import 'package:flutter_piton/product/entities/categories.dart';
 import 'package:flutter_piton/product/entities/category.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
+import 'package:flutter_piton/product/utility/constant/app_string.dart';
 import 'package:flutter_piton/product/widget/button/text_button.dart';
 import 'package:flutter_piton/view/home/widget/product_category_list.dart';
 import 'package:go_router/go_router.dart';
@@ -66,7 +67,7 @@ class Categories extends StatelessWidget {
               onPressed: () {
                 context.push(RouterManager.categoryDetails, extra: category);
               },
-              buttonText: "View All",
+              buttonText: AppString.viewAll,
               color: AppConstants.orangeColor,
             ),
           ],

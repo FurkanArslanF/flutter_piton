@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
+import 'package:flutter_piton/product/utility/constant/app_string.dart';
 import 'package:flutter_piton/product/widget/button/text_button.dart';
 import 'package:flutter_piton/product/widget/textfield/texfield.dart';
 import 'package:go_router/go_router.dart';
@@ -46,7 +47,7 @@ class RegisterTitleAndTextField extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     NormalTextButton(
-                      buttonText: "Login",
+                      buttonText: AppString.login,
                       onPressed: () {
                         context.go(RouterManager.login);
                       },

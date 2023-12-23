@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_piton/product/cubit/checkbox.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
+import 'package:flutter_piton/product/utility/constant/app_string.dart';
 import 'package:kartal/kartal.dart';
 import 'package:sizer/sizer.dart';
 
@@ -36,7 +37,7 @@ class _LoginCheckBoxState extends State<LoginCheckBox> {
               title: Transform.translate(
                 offset: Offset(-5.w, 0),
                 child: Text(
-                  "Remember me",
+                  AppString.rememberMe,
                   style: context.general.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppConstants.textButtonColor,

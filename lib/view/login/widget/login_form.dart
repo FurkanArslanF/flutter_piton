@@ -8,6 +8,7 @@ import 'package:flutter_piton/product/entities/token.dart';
 import 'package:flutter_piton/product/navigation/go_router.dart';
 import 'package:flutter_piton/product/storage/secure_storage.dart';
 import 'package:flutter_piton/product/utility/constant/app_constant.dart';
+import 'package:flutter_piton/product/utility/constant/app_string.dart';
 import 'package:flutter_piton/product/widget/button/eleveted_button.dart';
 import 'package:flutter_piton/product/widget/toastr/toastr.dart';
 import 'package:flutter_piton/view/login/widget/title_and_textfield.dart';
@@ -50,54 +51,56 @@ class _LoginFormBuilderState extends State<LoginFormBuilder> {
       children: [
         LoginTitleAndTextField(
           controller: emailController,
-          title: "Email",
+          title: AppString.login,
           valide: emailvalide,
-          valideText: "Lütfen geçerli bir email giriniz",
+          valideText: AppString.emailValide,
         ),
         LoginTitleAndTextField(
           controller: passwordController,
-          title: "Password",
+          title: AppString.password,
           valide: passwordvalide,
           valideText: passwordvalideText,
           obscureText: true,
           height: 45,
         ),
-        MultiBlocListener(
-          listeners: [
-            BlocListener<LoginCubit, TokenModel>(
-              listener: (context, loginState) {
-                debugPrint("blocklistener");
-                if (context.read<CheckboxCubit>().state == true) {
-                  debugPrint("checkbox true");
-                  SecureStorage().writeSecureData("email", emailController.text);
-                  SecureStorage().writeSecureData("password", passwordController.text);
-                  SecureStorage().writeSecureData("at", loginState.action.token);
-                }
-                if (loginState.action.token.ext.isNotNullOrNoEmpty) {
-                  ToastrMsg.instance.showToastrMsg(context, "Giriş başarılı");
-                  context.go(RouterManager.home);
-                } else if (loginState.action.token.ext.isNullOrEmpty) {
-                  ToastrMsg.instance.showToastrMsg(context, "Giriş başarısız");
-                } else {
-                  setState(() {
-                    isLoading = "loading";
-                  });
-                }
-              },
-            ),
-          ],
-          child: Padding(
-            padding: context.padding.onlyTopMedium * 1.8,
-            child: NormalElevetedButton(
-              buttonText: "Login",
-              state: isLoading,
-              onPressed: () async {
-                login(context);
-              },
-            ),
-          ),
+        loginButton(context),
+      ],
+    );
+  }
+
+  MultiBlocListener loginButton(BuildContext context) {
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<LoginCubit, TokenModel>(
+          listener: (context, loginState) {
+            if (context.read<CheckboxCubit>().state == true) {
+              SecureStorage().writeSecureData("email", emailController.text);
+              SecureStorage().writeSecureData("password", passwordController.text);
+              SecureStorage().writeSecureData("at", loginState.action.token);
+            }
+            if (loginState.action.token.ext.isNotNullOrNoEmpty) {
+              ToastrMsg.instance.showToastrMsg(context, AppString.loginToastr);
+              context.go(RouterManager.home);
+            } else if (loginState.action.token.ext.isNullOrEmpty) {
+              ToastrMsg.instance.showToastrMsg(context, AppString.loginToastr2);
+            } else {
+              setState(() {
+                isLoading = "loading";
+              });
+            }
+          },
         ),
       ],
+      child: Padding(
+        padding: context.padding.onlyTopMedium * 1.8,
+        child: NormalElevetedButton(
+          buttonText: AppString.login,
+          state: isLoading,
+          onPressed: () async {
+            login(context);
+          },
+        ),
+      ),
     );
   }
 
@@ -122,11 +125,11 @@ class _LoginFormBuilderState extends State<LoginFormBuilder> {
         setState(() {
           passwordvalide = true;
           if (passwordController.text.isEmpty) {
-            passwordvalideText = "Lütfen şifrenizi oluşturun";
+            passwordvalideText = AppString.psswordValide;
           } else if (passwordController.text.length < 6) {
-            passwordvalideText = "Şifreniz en az 6 karakter olmalıdır";
+            passwordvalideText = AppString.passwordValide2;
           } else {
-            passwordvalideText = "Şifreniz alfanümerik olmalıdır";
+            passwordvalideText = AppString.passwordValide3;
           }
         });
       }
